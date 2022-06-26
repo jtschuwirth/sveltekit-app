@@ -1,2 +1,21 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<div class="main">
+    <Sidebar />
+    <div class="index">
+      <h1>Home Page</h1>
+    </div>
+</div>
+
+<script> 
+    import Sidebar from '../lib/components/Sidebar.svelte';
+</script>
+
+<style> 
+  .main {
+    display: flex;
+    justify-content: row;
+    height: 90vh;
+  }
+  .index {
+    padding: 1.5em;
+  }
+</style>
