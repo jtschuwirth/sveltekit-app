@@ -1,4 +1,5 @@
 <div class="component">
+    <div class=left>
     <div class="label">
         <span>Select Blockchain</span>
         <select name="blockchain" id="" on:change={handleBlockchainChange}>
@@ -74,7 +75,8 @@
         </form>
     {/if}
     </div>
-
+    </div>
+    <div class="right">
     <span>Results:</span>
     <div class="results">
         {#each results as result}
@@ -86,12 +88,13 @@
                         <span>"Can't find a valid path"</span>
                     {/if}
                     {#if Object.values(result)[0]!="Can't find a valid path"}
-                        <span>{Object.values(result)[0].input.amount} {Object.values(result)[0].input.name} </span>
-                        <span>{Object.values(result)[0].output.amount} {Object.values(result)[0].output.name}</span>
+                        <span>{parseFloat(Object.values(result)[0].input.amount)} {Object.values(result)[0].input.name} </span>
+                        <span>{parseFloat(Object.values(result)[0].output.amount)} {Object.values(result)[0].output.name}</span>
                     {/if}
                 </div>
             </div>
         {/each}
+    </div>
     </div>
 </div>
 
@@ -161,6 +164,16 @@
 <style>
     .component {
         display: flex;
+        flex-direction: row;
+        gap: 2em;
+    }
+    .left {
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+    }
+    .right {
+        display: flex;
         flex-direction: column;
         gap: 1em;
     }
@@ -197,7 +210,7 @@
         display: flex;
         align-items: center;
         justify-content: flex-start;
-        width: 60px;
+        width: 30px;
         height: 20px;
         border-radius: 12px;
         cursor: pointer;
