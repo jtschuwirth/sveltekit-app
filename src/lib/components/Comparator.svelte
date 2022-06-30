@@ -2,7 +2,7 @@
     <div class=left>
     <div class="label">
         <span>Select Blockchain</span>
-        <select name="blockchain" id="" on:change={handleBlockchainChange}>
+        <select name="blockchain" data-testid="blockchain" on:change={handleBlockchainChange}>
             <option value={""} selected disabled>select</option>
             {#each blockchains as value}
                 <option value={value}>{value}</option>
@@ -12,16 +12,16 @@
     <div class="label">
     <span>Select Coins</span>
     {#if tx_type=="sell"}
-        <form on:submit|preventDefault={handleSearch} class="comparator-container">
+        <form on:submit|preventDefault={handleSearch} class="comparator-container" data-testid="sell-form">
             <label class="switchBtn">
                 <input type="checkbox" on:change={handleTxChange}>
                 <div class="slide"></div>
             </label>
         <div class="label">
-            <label for="">SEll</label>
+            <label for="">Sell</label>
             <div>
-            <input name="sellInput" type="number">
-            <select name="sell" id="">
+            <input name="sellInput" type="number" data-testid="sell-input">
+            <select name="sell" id="" data-testid="sell-select">
                 <option value="" selected disabled>select</option>
                 {#each tokens as value}
                     <option value={value}>{value}</option>
@@ -31,15 +31,15 @@
         </div>
 
         <div class="label-sell">
-            <label for="">BUY</label>
-            <select name="buy" id="">
+            <label for="">Buy</label>
+            <select name="buy" id="" data-testid="buy-select">
                 <option value="" selected disabled>select</option>
                 {#each tokens as value}
                     <option value={value}>{value}</option>
                 {/each}
             </select>
         </div>
-        <button type="submit">Search</button>
+        <button type="submit" data-testid="sell-search">Search</button>
         </form>
     {/if}
 
@@ -105,7 +105,7 @@
     let tokens: String[] = [];
     let results: Object[] = [];
     let blockchains: String[] = [];
-    let current_blockchain: String = "polygon";
+    let current_blockchain: String = "";
     let tx_type: String = "sell";
 
     onMount(async () => {
@@ -126,16 +126,17 @@
         if (!e.target) return;
         const target = e.target as HTMLSelectElement;
         current_blockchain = target.value
-        fetchTokens(target.value)
+        fetchTokens(current_blockchain)
     }
 
-    function handleSearch(e: SubmitEvent): void {
+    async function handleSearch(e: SubmitEvent): Promise<void> {
+        e.preventDefault
         if (!e.target) return;
         const target = e.target as HTMLFormElement;
         if (tx_type  == "sell") {
-            fetchInputSwaps(target.sell.value, target.sellInput.value, target.buy.value, current_blockchain)
+            await fetchInputSwaps(target.sell.value, target.sellInput.value, target.buy.value, current_blockchain)
         } else {
-            fetchOutputSwaps(target.sell.value, target.buyInput.value, target.buy.value, current_blockchain)
+            await fetchOutputSwaps(target.sell.value, target.buyInput.value, target.buy.value, current_blockchain)
         }
 
     }
@@ -210,7 +211,7 @@
         display: flex;
         align-items: center;
         justify-content: flex-start;
-        width: 30px;
+        width: 50px;
         height: 20px;
         border-radius: 12px;
         cursor: pointer;
