@@ -13,7 +13,7 @@
 
 <script lang="ts"> 
     import Sidebar from '../lib/components/Sidebar.svelte';
-    import ProjectCard from '$lib/components/ProjectCard.svelte';
+    import ProjectCard from '../lib/components/ProjectCard.svelte';
 
 </script>
 
